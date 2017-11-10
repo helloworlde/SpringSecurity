@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hellowood.springsecurity.mapper.UserMapper">
+
+    <resultMap id="baseResultMap" type="cn.com.hellowood.springsecurity.model.UserModel">
+        <id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"></id>
+        <result column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR"></result>
+        <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR"></result>
+        <result column="enabled" property="enabled" javaType="java.lang.Boolean" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <select id="getUserByUsername" parameterType="java.lang.String" resultMap="baseResultMap">
+        SELECT
+            id,
+            username,
+            password,
+            enabled
+        FROM user
+        WHERE username = #{username, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getUserByUsernameAndPassword" resultType="cn.com.hellowood.springsecurity.model.UserModel">
+        SELECT
+            id,
+            username,
+            password,
+            enabled
+        FROM user
+        WHERE username = #{username, jdbcType=VARCHAR}
+              AND password = #{password, jdbcType=VARCHAR}
+    </select>
+</mapper>

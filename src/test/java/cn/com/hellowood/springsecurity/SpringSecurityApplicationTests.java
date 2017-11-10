@@ -19,6 +19,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type Spring security application tests.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -27,12 +30,22 @@ public class SpringSecurityApplicationTests {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Access unprotected.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void accessUnprotected() throws Exception {
         mockMvc.perform(get("/index"))
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Access protected redirects to login.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void accessProtectedRedirectsToLogin() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/user/index"))
@@ -42,12 +55,22 @@ public class SpringSecurityApplicationTests {
         assertThat(mvcResult.getResponse().getRedirectedUrl().endsWith("/login"));
     }
 
+    /**
+     * Login user.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void loginUser() throws Exception {
         mockMvc.perform(formLogin().user("user").password("password"))
                 .andExpect(authenticated());
     }
 
+    /**
+     * Login invalid user.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void loginInvalidUser() throws Exception {
         mockMvc.perform(formLogin().user("invalid").password("invalid"))
@@ -55,6 +78,11 @@ public class SpringSecurityApplicationTests {
                 .andExpect(status().is3xxRedirection());
     }
 
+    /**
+     * Login user access protected.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void loginUserAccessProtected() throws Exception {
         MvcResult mvcResult = mockMvc.perform(formLogin().user("user").password("password"))
@@ -66,6 +94,11 @@ public class SpringSecurityApplicationTests {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Login user validate logout.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void loginUserValidateLogout() throws Exception {
         MvcResult mvcResult = mockMvc.perform(formLogin().user("user").password("password"))
