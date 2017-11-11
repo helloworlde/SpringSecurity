@@ -18,5 +18,7 @@ notifications:
     slack: hellowood:3qHqpWCi2LQV4MsQYPsHJBK6
 before_install:
 - chmod +x gradlew
+- pip install --user codecov
 after_success:
+  - codecov
   - bash <(curl -s https://codecov.io/bash)
