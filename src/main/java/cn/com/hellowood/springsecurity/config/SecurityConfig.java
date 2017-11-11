@@ -20,14 +20,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // This is permitted for all user
         http.authorizeRequests()
                 .antMatchers("/", "/login", "/login-error", "/css/**", "/index")
                 .permitAll();
 
+        // Others url is need authenticate to access
         http.authorizeRequests()
                 .anyRequest()
                 .authenticated();
 
+        // This config require login form action is '/login' and username and password parameter name is
+        // 'username' and 'password', and login fail url is 'login-error'
         http.formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")

@@ -5,12 +5,13 @@ import cn.com.hellowood.springsecurity.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * The type Custom authentication provider.
  *
- * @author hehuimin
+ * @author HelloWood
  */
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -46,12 +47,17 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
+        // Check username and password is correct
         UserModel user = userService.loadUserByUsernameAndPassword(username, password);
         if (user == null) {
-            logger.error("{} login failed, username or password is wrong", username);
-            throw new UsernameNotFoundException("Username or password wrong");
+            logger.error("user {} login failed, username or password is wrong", username);
+            throw new BadCredentialsException("Username or password is not correct");
+        } else if (!user.getEnabled()) {
+            logger.error("user {} login failed, this account had expired", username);
+            throw new AccountExpiredException("Account had expired");
         }
 
+        // If user is valid put user info to session
         session.setAttribute("user", user);
         Authentication auth = new UsernamePasswordAuthenticationToken(username, password, grantedAuthorities);
         return auth;
