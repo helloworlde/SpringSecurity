@@ -3,19 +3,32 @@
 <head>
     <title>Login page</title>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" href="/css/main.css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
 </head>
 <body>
-<h1>Login page</h1>
-<p>Example user: user / password</p>
-<p th:if="${loginError}" class="error">Wrong user or password</p>
-<form th:action="@{/login}" method="post">
-    <label for="username">Username</label>:
-    <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
-    <label for="password">Password</label>:
-    <input type="password" id="password" name="password"/> <br/>
-    <input type="submit" value="Log in"/>
-</form>
-<p><a href="/index" th:href="@{/index}">Back to home page</a></p>
+<div class="container">
+    <form th:action="@{/login}" method="post" class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <div>
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" id="username" name="username"
+                   th:class="${loginError} ? 'form-control is-invalid' : 'form-control'" placeholder="Username"
+                   required="required"
+                   autofocus="autofocus"/>
+            <div class="invalid-feedback" th:if="${loginError}">
+                Wrong username or password
+            </div>
+        </div>
+        <div>
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                   required="required"/>
+        </div>
+        <button class="btn btn-success btn-block" type="submit">Sign in</button>
+        <a href="/index" th:href="@{/index}" class="btn btn-primary btn-block">Back to Home page</a>
+    </form>
+</div>
 </body>
 </html>

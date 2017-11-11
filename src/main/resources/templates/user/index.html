@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Hello Spring Security</title>
+    <title>Spring Security</title>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" href="/css/main.css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
 </head>
 <body>
-<div th:substituteby="index::logout"></div>
-<h1>This is a secured page!</h1>
-<p><a href="/index" th:href="@{/index}">Back to home page</a></p>
+<div class="container">
+    <form action="#" class="form-signin">
+        <h2 class="form-signin-heading">Hello Spring Security</h2>
+        <h5 class="form-signin-heading content-adjust">Only logged in user can access this page</h5>
+        <div th:if="${session.user} != null">
+            <h5 class="form-signin-heading content-adjust">Logged user is <span th:text="${session.user.username}"></span></h5>
+            <a href="/index" th:href="@{/index}" class="btn btn-primary btn-block">Back to Home page</a>
+        </div>
+    </form>
+    <div th:substituteby="index::logout"></div>
+</div>
 </body>
 </html>
