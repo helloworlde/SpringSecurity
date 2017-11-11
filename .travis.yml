@@ -21,4 +21,5 @@ before_install:
 - pip install --user codecov
 after_success:
   - codecov
+  - ./gradlew jacocoTestReport coveralls
   - bash <(curl -s https://codecov.io/bash)
