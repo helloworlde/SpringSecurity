@@ -5,5 +5,4 @@ CREATE TABLE user (
   enabled  INT         NOT NULL DEFAULT 1
 );
 
-INSERT INTO user (username, password, enabled) VALUES ('admin', 'admin', TRUE);
-INSERT INTO user (username, password, enabled) VALUES ('user', 'user', TRUE);
+INSERT INTO user (username, password, enabled) VALUES ('username', 'password', TRUE);
