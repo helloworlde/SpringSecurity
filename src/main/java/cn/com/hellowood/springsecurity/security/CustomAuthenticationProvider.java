@@ -56,6 +56,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             logger.error("user {} login failed, this account had expired", username);
             throw new AccountExpiredException("Account had expired");
         }
+        // TODO There should add more logic to determine locked, expired and others status
 
         // If user is valid put user info to session
         session.setAttribute("user", user);
