@@ -1,10 +1,10 @@
 package cn.com.hellowood.springsecurity.config;
 
-import cn.com.hellowood.springsecurity.security.CustomAuthenticationFailureHandler;
-import cn.com.hellowood.springsecurity.security.CustomAuthenticationProvider;
-import cn.com.hellowood.springsecurity.security.CustomAuthenticationSuccessHandler;
-import cn.com.hellowood.springsecurity.security.CustomLogoutHandler;
+import cn.com.hellowood.springsecurity.security.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,8 +13,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+
+import javax.sql.DataSource;
 
 import static cn.com.hellowood.springsecurity.common.constant.CommonConstant.*;
 
@@ -26,8 +28,18 @@ import static cn.com.hellowood.springsecurity.common.constant.CommonConstant.*;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private CustomAuthenticationProvider customAuthenticationProvider;
+
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
+    // The DataSource is required for set JdbcRememberMeImpl
+    @Autowired
+    @Qualifier("dataSource")
+    DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -41,10 +53,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated();
 
+        // If don't need save remember me authentication to database, 'http.authorizeRequests().and().rememberMe()'
+        // is enough; if you want save authentication into database, need provide RememberMeService instance and
+        // a key, the key must be same as RememberMeService instance key, or there will be fail when login by
+        // remember me cookie.
         http.authorizeRequests()
                 .and()
                 .rememberMe()
-                .rememberMeServices(rememberMeServices(INTERNAL_SECRET_KEY));
+                .rememberMeServices(rememberMeServices())
+                .key(INTERNAL_SECRET_KEY);
 
 
         //This config require login form action is '/login' and username and password parameter name is
@@ -82,11 +99,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().cacheControl().disable();
     }
 
+
+    /**
+     * To provide a RememberMeService instance for RememberMe function
+     * The @Bean annotation is not necessary
+     *
+     * @return the remember me services
+     */
     @Bean
-    public RememberMeServices rememberMeServices(String key) {
-        InMemoryTokenRepositoryImpl rememberMeTokenRepository = new InMemoryTokenRepositoryImpl();
+    public RememberMeServices rememberMeServices() {
+        // There is need for DataSource if there is InMemoryTokenRepositoryImpl instance.
+        // but JdbcTokenRepositoryImpl need DataSource to query RememberMe token for Database
+        JdbcTokenRepositoryImpl rememberMeTokenRepository = new JdbcTokenRepositoryImpl();
+        rememberMeTokenRepository.setDataSource(dataSource);
+
+        // The INTERNAL_SECRET_KEY can be any String not null or blank, but must be same as the
+        // key set in method configure(HttpSecurity http) after
+        // rememberMeServices(RememberMeServices rememberMeServices)
         PersistentTokenBasedRememberMeServices rememberMeServices =
-                new PersistentTokenBasedRememberMeServices(key, userDetailsService(), rememberMeTokenRepository);
+                new PersistentTokenBasedRememberMeServices(INTERNAL_SECRET_KEY, userDetailsService, rememberMeTokenRepository);
+
+        // The parameter set is not necessary. default is "remember-me", if set, it must be same
+        // as RememberMe checkbox parameter name in login page.
         rememberMeServices.setParameter(REMEMBER_ME);
         return rememberMeServices;
     }
@@ -105,5 +139,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(customAuthenticationProvider);
+        try {
+            auth.userDetailsService(userDetailsService);
+        } catch (Exception e) {
+            logger.error("Set userDetailService failed, {}", e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

@@ -6,3 +6,11 @@ CREATE TABLE user (
 );
 
 INSERT INTO user (username, password, enabled) VALUES ('username', 'password', TRUE);
+
+# This table is for save user login token parameter Remember Me function
+CREATE TABLE persistent_logins (
+  username  VARCHAR(64) NOT NULL,
+  series    VARCHAR(64) NOT NULL PRIMARY KEY,
+  token     VARCHAR(64) NOT NULL,
+  last_used TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
