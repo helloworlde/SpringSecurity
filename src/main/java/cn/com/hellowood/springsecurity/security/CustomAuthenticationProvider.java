@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cn.com.hellowood.springsecurity.common.constant.CommonConstant.USER;
+
 /**
  * The type Custom authentication provider.
  *
@@ -59,7 +61,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         // TODO There should add more logic to determine locked, expired and others status
 
         // If user is valid put user info to session
-        session.setAttribute("user", user);
+        session.setAttribute(USER, user);
         Authentication auth = new UsernamePasswordAuthenticationToken(username, password, grantedAuthorities);
         return auth;
     }

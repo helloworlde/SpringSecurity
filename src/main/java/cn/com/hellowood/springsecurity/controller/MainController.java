@@ -4,6 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * The type Main controller.
  *
@@ -59,8 +62,9 @@ public class MainController {
      * @return the login error page url
      */
     @RequestMapping("/login-error")
-    public String loginError(Model model) {
+    public String loginError(Model model, HttpServletRequest request, HttpServletResponse response) {
         model.addAttribute("loginError", true);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         return "login";
     }
 

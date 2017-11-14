@@ -18,7 +18,7 @@
                    required="required"
                    autofocus="autofocus"/>
             <div class="invalid-feedback" th:if="${loginError}">
-                Wrong username or password
+                <span th:text="${session.loginErrorMsg}"></span>
             </div>
         </div>
         <div>

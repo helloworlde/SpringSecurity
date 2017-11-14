@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static cn.com.hellowood.springsecurity.common.constant.CommonConstant.USER;
+
 /**
  * The type Custom logout handler.
  *
@@ -24,8 +26,8 @@ public class CustomLogoutHandler implements LogoutHandler {
         if (authentication != null && authentication.getPrincipal() != null) {
             String username = (String) authentication.getPrincipal();
             HttpSession session = request.getSession();
-            if (session.getAttribute("user") != null) {
-                session.removeAttribute("user");
+            if (session.getAttribute(USER) != null) {
+                session.removeAttribute(USER);
                 session.invalidate();
                 logger.info("user {} log out, the session is set as invalid", username);
             }

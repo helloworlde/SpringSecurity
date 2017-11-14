@@ -16,6 +16,8 @@ import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 
+import static cn.com.hellowood.springsecurity.common.constant.CommonConstant.*;
+
 /**
  * The type Security config.
  *
@@ -31,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // This is permitted for all user
         http.authorizeRequests()
-                .antMatchers("/", "/login", "/login-error", "/css/**", "/index")
+                .antMatchers(ROOT_URL, LOGIN_URL, LOGIN_ERROR_URL, CSS_WILDCARD_URL, INDEX_URL)
                 .permitAll();
 
         // Others url is need authenticate to access
@@ -42,21 +44,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .and()
                 .rememberMe()
-                .rememberMeServices(rememberMeServices("internalSecretKey"));
+                .rememberMeServices(rememberMeServices(INTERNAL_SECRET_KEY));
 
 
         //This config require login form action is '/login' and username and password parameter name is
         //'username' and 'password', and login fail url is 'login-error';
         // If successForwardurl and successHandler method is called here together, the success forward
-        // url will not work, need to set forward url in success handler
+        // url will not work, need to set forward url in success handler. The failure handler is same.
         http.formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .successForwardUrl("/user/index")
+                .loginPage(LOGIN_URL)
+                .loginProcessingUrl(LOGIN_URL)
+                .usernameParameter(USERNAME)
+                .passwordParameter(PASSWORD)
+                .successForwardUrl(USER_INDEX_URL)
                 .successHandler(new CustomAuthenticationSuccessHandler())
-                .failureUrl("/login-error")
+                .failureUrl(LOGIN_ERROR_URL)
                 .failureHandler(new CustomAuthenticationFailureHandler());
 
 
@@ -67,24 +69,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement()
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(false)
-                .expiredUrl("/login")
+                .expiredUrl(LOGIN_URL)
                 .sessionRegistry(sessionRegistry());
 
         // Logout handler for logout logic
         http.logout()
                 .invalidateHttpSession(true)
-                .logoutUrl("/logout")
+                .logoutUrl(LOGOUT_URL)
                 .addLogoutHandler(new CustomLogoutHandler());
 
         // Disables Security Cache Control for Cache static resource
         http.headers().cacheControl().disable();
     }
 
-    private RememberMeServices rememberMeServices(String key) {
+    @Bean
+    public RememberMeServices rememberMeServices(String key) {
         InMemoryTokenRepositoryImpl rememberMeTokenRepository = new InMemoryTokenRepositoryImpl();
         PersistentTokenBasedRememberMeServices rememberMeServices =
                 new PersistentTokenBasedRememberMeServices(key, userDetailsService(), rememberMeTokenRepository);
-        rememberMeServices.setParameter("remember-me");
+        rememberMeServices.setParameter(REMEMBER_ME);
         return rememberMeServices;
     }
 
