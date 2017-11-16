@@ -6,7 +6,9 @@
         <id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"></id>
         <result column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR"></result>
         <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR"></result>
-        <result column="enabled" property="enabled" javaType="java.lang.Boolean" jdbcType="INTEGER"></result>
+        <result column="enabled" property="enabled" javaType="java.lang.Boolean" jdbcType="BOOLEAN"></result>
+        <result column="expired" property="expired" javaType="java.lang.Boolean" jdbcType="BOOLEAN"></result>
+        <result column="locked" property="locked" javaType="java.lang.Boolean" jdbcType="BOOLEAN"></result>
     </resultMap>
 
     <select id="getUserByUsername" parameterType="java.lang.String" resultMap="baseResultMap">
@@ -14,7 +16,9 @@
             id,
             username,
             password,
-            enabled
+        enabled,
+        expired,
+        locked
         FROM user
         WHERE username = #{username, jdbcType=VARCHAR}
     </select>
@@ -24,7 +28,9 @@
             id,
             username,
             password,
-            enabled
+        enabled,
+        expired,
+        locked
         FROM user
         WHERE username = #{username, jdbcType=VARCHAR}
               AND password = #{password, jdbcType=VARCHAR}

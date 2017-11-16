@@ -14,11 +14,11 @@
         <div>
             <label for="username" class="sr-only">Username</label>
             <input type="text" id="username" name="username"
-                   th:class="${loginError} ? 'form-control is-invalid' : 'form-control'" placeholder="Username"
+                   th:class="${loginErrorMsg} ? 'form-control is-invalid' : 'form-control'" placeholder="Username"
                    required="required"
                    autofocus="autofocus"/>
-            <div class="invalid-feedback" th:if="${loginError}">
-                <span th:text="${session.loginErrorMsg}"></span>
+            <div class="invalid-feedback" th:if="${loginErrorMsg}">
+                <span th:text="${loginErrorMsg}"></span>
             </div>
         </div>
         <div>

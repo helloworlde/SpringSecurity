@@ -7,11 +7,8 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The type Custom authentication provider.
@@ -37,12 +34,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-        logger.info("start validate user {} login", username);
         // Check username and password is correct, if login is invalid, will throw AuthenticationException
-        userDetailsService.loadUserByUsernameAndPassword(username, password);
-        Authentication auth = new UsernamePasswordAuthenticationToken(username, password, grantedAuthorities);
+        UserDetails userDetails = userDetailsService.loadUserByUsernameAndPassword(username, password);
+        Authentication auth = new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
         return auth;
     }
 

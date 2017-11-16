@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import static cn.com.hellowood.springsecurity.common.constant.CommonConstant.LOGIN_ERROR_MSG;
 
 /**
  * The type Main controller.
@@ -63,7 +66,9 @@ public class MainController {
      */
     @RequestMapping("/login-error")
     public String loginError(Model model, HttpServletRequest request, HttpServletResponse response) {
-        model.addAttribute("loginError", true);
+        HttpSession session = request.getSession();
+        model.addAttribute(LOGIN_ERROR_MSG, session.getAttribute(LOGIN_ERROR_MSG));
+        session.removeAttribute(LOGIN_ERROR_MSG);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         return "login";
     }

@@ -15,6 +15,10 @@ public class UserModel {
 
     private Boolean enabled;
 
+    private Boolean locked;
+
+    private Boolean expired;
+
     /**
      * Instantiates a new User model.
      */
@@ -108,6 +112,32 @@ public class UserModel {
         this.enabled = enabled;
     }
 
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    /**
+     * Gets expired.
+     *
+     * @return the expired
+     */
+    public Boolean getExpired() {
+        return expired;
+    }
+
+    /**
+     * Sets expired.
+     *
+     * @param expired the expired
+     */
+    public void setExpired(Boolean expired) {
+        this.expired = expired;
+    }
+
     @Override
     public String toString() {
         return "UserModel{" +
@@ -115,6 +145,8 @@ public class UserModel {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
+                ", locked=" + locked +
+                ", expired=" + expired +
                 '}';
     }
 }
