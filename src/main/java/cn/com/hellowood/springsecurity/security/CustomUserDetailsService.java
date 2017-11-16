@@ -104,10 +104,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         } else if (!user.getEnabled()) {
             logger.error("user {} login failed, the account is disabled", username);
             throw new DisabledException("Account is disabled");
-        } else if (!user.getExpired()) {
+        } else if (user.getExpired()) {
             logger.error("user {} login failed, the account is expired", username);
             throw new AccountExpiredException("Account is expired");
-        } else if (!user.getLocked()) {
+        } else if (user.getLocked()) {
             throw new LockedException("Account is locked");
         }
         return user;
