@@ -45,7 +45,17 @@ public class MainController {
      */
     @RequestMapping("/user/index")
     public String userIndex() {
-        return "user/index";
+        return "/user/index";
+    }
+
+    /**
+     * Admin index page.
+     *
+     * @return the page url
+     */
+    @RequestMapping("/admin/index")
+    public String adminIndex() {
+        return "/admin/index";
     }
 
     /**
@@ -61,7 +71,9 @@ public class MainController {
     /**
      * Login error page.
      *
-     * @param model the model
+     * @param model    the model
+     * @param request  the request
+     * @param response the response
      * @return the login error page url
      */
     @RequestMapping("/login-error")

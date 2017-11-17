@@ -11,6 +11,10 @@
         <result column="locked" property="locked" javaType="java.lang.Boolean" jdbcType="BOOLEAN"></result>
     </resultMap>
 
+    <resultMap id="roleResultMap" type="java.lang.String">
+        <result column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR"></result>
+    </resultMap>
+
     <select id="getUserByUsername" parameterType="java.lang.String" resultMap="baseResultMap">
         SELECT
             id,
@@ -34,5 +38,12 @@
         FROM user
         WHERE username = #{username, jdbcType=VARCHAR}
               AND password = #{password, jdbcType=VARCHAR}
+    </select>
+    <select id="getRoleByUserId" parameterType="java.lang.Integer" resultMap="roleResultMap">
+        SELECT r.name
+        FROM role r
+            LEFT JOIN user_role_xref urx
+                ON r.id = urx.role_id
+        WHERE user_id = #{userId, jdbcType=INTEGER}
     </select>
 </mapper>

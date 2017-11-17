@@ -11,6 +11,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.com.hellowood.springsecurity.common.constant.CommonConstant.USER;
+import static cn.com.hellowood.springsecurity.common.constant.CommonConstant.LOGIN_USER;
 
 /**
  * The type Custom user details service.
@@ -78,14 +79,18 @@ public class CustomUserDetailsService implements UserDetailsService {
      */
     private UserDetails handlerUserDetails(UserModel user) {
 
-        // TODO Load user permission
+        // Load user permission
         List<GrantedAuthority> permissionList = new ArrayList<>();
+        List<String> roles = userMapper.getRoleByUserId(user.getId());
+        for (String role : roles) {
+            permissionList.add(new SimpleGrantedAuthority(role));
+        }
 
         UserDetails userDetails = new User(user.getUsername(), user.getPassword(), permissionList);
 
         // Put user info to session
-        session.setAttribute(USER, userDetails);
-        logger.info("user {} login success", user.getUsername());
+        session.setAttribute(LOGIN_USER, userDetails);
+        logger.info("user [{}] login success, the role is {}", user.getUsername(), permissionList.toString());
 
         return userDetails;
     }
@@ -99,13 +104,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserModel loadAndValidateUser(String username) {
         UserModel user = userMapper.getUserByUsername(username);
         if (user == null) {
-            logger.error("user {} login failed, the account not exist", username);
+            logger.error("user [{}] login failed, the account not exist", username);
             throw new UsernameNotFoundException("Account not exist");
         } else if (!user.getEnabled()) {
-            logger.error("user {} login failed, the account is disabled", username);
+            logger.error("user [{}] login failed, the account is disabled", username);
             throw new DisabledException("Account is disabled");
         } else if (user.getExpired()) {
-            logger.error("user {} login failed, the account is expired", username);
+            logger.error("user [{}] login failed, the account is expired", username);
             throw new AccountExpiredException("Account is expired");
         } else if (user.getLocked()) {
             throw new LockedException("Account is locked");

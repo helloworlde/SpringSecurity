@@ -37,7 +37,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         // Check username and password is correct, if login is invalid, will throw AuthenticationException
         UserDetails userDetails = userDetailsService.loadUserByUsernameAndPassword(username, password);
-        Authentication auth = new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
+        auth.setDetails(userDetails);
         return auth;
     }
 

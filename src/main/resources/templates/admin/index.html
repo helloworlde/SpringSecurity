@@ -10,7 +10,7 @@
 <body>
 <div class="container">
     <form action="#" class="form-signin">
-        <h5 class="form-signin-heading content-adjust">Only logged in user can access</h5>
+        <h5 class="form-signin-heading content-adjust">Only Admin user can access</h5>
         <div th:if="${session.user} != null">
             <h5 class="form-signin-heading content-adjust">Logged user is <span
                     th:text="${session.user.username}"></span></h5>
