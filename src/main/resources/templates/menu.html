@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<aside class="left-sidebar" th:fragment="menu">
+    <div class="scroll-sidebar">
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li>
+                    <a class="waves-effect waves-dark" href="/user/index" th:href="@{/user/index}"
+                       aria-expanded="false">
+                        <span class="hide-menu">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="waves-effect waves-dark" href="/user/index" th:href="@{/user/index}"
+                       aria-expanded="false">
+                        <span class="hide-menu">Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>
+</body>
+</html>

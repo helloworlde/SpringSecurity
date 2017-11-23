@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // This is permitted for all user
         http.authorizeRequests()
-                .antMatchers(ROOT_URL, LOGIN_URL, LOGIN_ERROR_URL, CSS_WILDCARD_URL, INDEX_URL)
+                .antMatchers(ROOT_URL, LOGIN_URL, LOGIN_ERROR_URL, CSS_WILDCARD_URL, WEB_JARS_WILDCARD_URL, INDEX_URL)
                 .permitAll();
 
         // Role USER can access '/user/**' url

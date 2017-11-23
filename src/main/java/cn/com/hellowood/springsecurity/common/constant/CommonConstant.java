@@ -20,6 +20,7 @@ public class CommonConstant {
     public static final String USER_INDEX_URL = "/user/index";
     public static final String USER_WILDCARD_URL = "/user/**";
     public static final String CSS_WILDCARD_URL = "/css/**";
+    public static final String WEB_JARS_WILDCARD_URL = "/webjars/**";
 
     /**
      * User role

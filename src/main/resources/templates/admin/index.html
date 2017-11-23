@@ -1,23 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Spring Security</title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <link rel="stylesheet" href="/css/main.css" th:href="@{/css/main.css}"/>
-    <link rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout::layout">
 <body>
-<div class="container">
-    <form action="#" class="form-signin">
-        <h5 class="form-signin-heading content-adjust">Only Admin user can access</h5>
-        <div th:if="${session.user} != null">
-            <h5 class="form-signin-heading content-adjust">Logged user is <span
-                    th:text="${session.user.username}"></span></h5>
-            <a href="/index" th:href="@{/index}" class="btn btn-primary btn-block">Back to Home page</a>
-        </div>
-    </form>
-    <div th:substituteby="index::logout"></div>
+<div layout:fragment="content">
+    <div>
+        <h1>Admin Page</h1>
+    </div>
 </div>
 </body>
 </html>

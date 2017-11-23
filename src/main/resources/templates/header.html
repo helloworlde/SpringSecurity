@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<header class="topbar" th:fragment="header">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <div class="navbar-header content-center">
+            <a class="navbar-brand" href="index.html">
+                <b>
+                    <img src="/picture/icon.png" alt="homepage" class="icon"/>
+                </b>
+            </a>
+        </div>
+        <div class="navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark"
+                       href="javascript:void(0)">
+                        <i class="ti-menu"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav my-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-dark" href="/logout" th:href="@{#}"
+                       onclick="$('#form').submit();">
+                        <img src="/picture/head.png" alt="user" class="profile-pic"/>
+                    </a>
+                </li>
+                <li>
+                    <form style="visibility: hidden" id="form" method="post" action="#"
+                          th:action="@{/logout}"></form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+</body>
+</html>
