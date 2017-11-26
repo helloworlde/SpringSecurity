@@ -1,6 +1,10 @@
 package cn.com.hellowood.springsecurity.security;
 
+import cn.com.hellowood.springsecurity.mapper.MenuMapper;
+import cn.com.hellowood.springsecurity.mapper.RoleMapper;
 import cn.com.hellowood.springsecurity.mapper.UserMapper;
+import cn.com.hellowood.springsecurity.model.MenuModel;
+import cn.com.hellowood.springsecurity.model.RoleModel;
 import cn.com.hellowood.springsecurity.model.UserModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cn.com.hellowood.springsecurity.common.constant.CommonConstant.AUTHENTICATION_USER;
 import static cn.com.hellowood.springsecurity.common.constant.CommonConstant.LOGIN_USER;
 
 /**
@@ -36,6 +41,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Autowired
+    private MenuMapper menuDao;
 
     @Autowired
     private HttpSession session;
@@ -79,18 +90,22 @@ public class CustomUserDetailsService implements UserDetailsService {
      */
     private UserDetails handlerUserDetails(UserModel user) {
 
-        // Load user permission
-        List<GrantedAuthority> permissionList = new ArrayList<>();
-        List<String> roles = userMapper.getRoleByUserId(user.getId());
-        for (String role : roles) {
-            permissionList.add(new SimpleGrantedAuthority(role));
-        }
+        // Load user role
+        List<GrantedAuthority> authorityList = new ArrayList<>();
+        RoleModel role = userMapper.getRoleByUserId(user.getId());
+        user.setRole(role);
 
-        UserDetails userDetails = new User(user.getUsername(), user.getPassword(), permissionList);
+        // Load user menus
+        List<MenuModel> menus = menuDao.getMenuByRoleId(role.getId());
+        user.setMenus(menus);
+
+        authorityList.add(new SimpleGrantedAuthority(role.getName()));
+        UserDetails userDetails = new User(user.getUsername(), user.getPassword(), authorityList);
 
         // Put user info to session
-        session.setAttribute(LOGIN_USER, userDetails);
-        logger.info("user [{}] login success, the role is {}", user.getUsername(), permissionList.toString());
+        session.setAttribute(AUTHENTICATION_USER, userDetails);
+        session.setAttribute(LOGIN_USER, user);
+        logger.info("user [{}] login success, the role is {}", user.getUsername(), authorityList.toString());
 
         return userDetails;
     }

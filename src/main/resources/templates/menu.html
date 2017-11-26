@@ -5,16 +5,10 @@
     <div class="scroll-sidebar">
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                <li>
-                    <a class="waves-effect waves-dark" href="/user/index" th:href="@{/user/index}"
+                <li th:each="menu,menuStat : ${session.user.menus}">
+                    <a class="waves-effect waves-dark" href="${menu.url}" th:href="${menu.url}"
                        aria-expanded="false">
-                        <span class="hide-menu">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="waves-effect waves-dark" href="/user/index" th:href="@{/user/index}"
-                       aria-expanded="false">
-                        <span class="hide-menu">Profile</span>
+                        <span class="hide-menu" th:text="${menu.displayValue}"></span>
                     </a>
                 </li>
             </ul>

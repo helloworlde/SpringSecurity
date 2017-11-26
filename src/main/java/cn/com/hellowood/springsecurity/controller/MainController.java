@@ -48,6 +48,16 @@ public class MainController {
         return "/user/index";
     }
 
+    @RequestMapping("/user/profile")
+    public String userProfile() {
+        return "/user/profile";
+    }
+
+    @RequestMapping("/user/dashboard")
+    public String userDashboard() {
+        return "/user/dashboard";
+    }
+
     /**
      * Admin index page.
      *

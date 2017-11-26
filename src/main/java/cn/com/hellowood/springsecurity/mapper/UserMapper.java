@@ -1,11 +1,10 @@
 package cn.com.hellowood.springsecurity.mapper;
 
 
+import cn.com.hellowood.springsecurity.model.RoleModel;
 import cn.com.hellowood.springsecurity.model.UserModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * The interface User mapper.
@@ -39,5 +38,5 @@ public interface UserMapper {
      * @param userId the user id
      * @return the role by user id
      */
-    List<String> getRoleByUserId(@Param("userId") Integer userId);
+    RoleModel getRoleByUserId(@Param("userId") Integer userId);
 }

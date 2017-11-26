@@ -35,6 +35,7 @@ public class CommonConstant {
      * Parameter key
      */
     public static final String LOGIN_ERROR_MSG = "loginErrorMsg";
+    public static final String AUTHENTICATION_USER = "userDetails";
     public static final String LOGIN_USER = "user";
 
     public static final String USERNAME = "username";

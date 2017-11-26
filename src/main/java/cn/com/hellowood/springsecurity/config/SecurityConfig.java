@@ -48,12 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(ROOT_URL, LOGIN_URL, LOGIN_ERROR_URL, CSS_WILDCARD_URL, WEB_JARS_WILDCARD_URL, INDEX_URL)
                 .permitAll();
 
-        // Role USER can access '/user/**' url
+        // RoleModel USER can access '/user/**' url
         http.authorizeRequests()
                 .antMatchers(USER_WILDCARD_URL)
                 .hasRole(USER);
 
-        // Role ADMIN can access '/admin/**' url
+        // RoleModel ADMIN can access '/admin/**' url
         http.authorizeRequests()
                 .antMatchers(ADMIN_WILDCARD_URL)
                 .hasRole(ADMIN);

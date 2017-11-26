@@ -1,5 +1,7 @@
 package cn.com.hellowood.springsecurity.model;
 
+import java.util.List;
+
 /**
  * The type User model.
  *
@@ -18,6 +20,10 @@ public class UserModel {
     private Boolean locked;
 
     private Boolean expired;
+
+    private RoleModel role;
+
+    private List<MenuModel> menus;
 
     /**
      * Instantiates a new User model.
@@ -112,10 +118,20 @@ public class UserModel {
         this.enabled = enabled;
     }
 
+    /**
+     * Gets locked.
+     *
+     * @return the locked
+     */
     public Boolean getLocked() {
         return locked;
     }
 
+    /**
+     * Sets locked.
+     *
+     * @param locked the locked
+     */
     public void setLocked(Boolean locked) {
         this.locked = locked;
     }
@@ -138,6 +154,33 @@ public class UserModel {
         this.expired = expired;
     }
 
+
+    /**
+     * Gets menus.
+     *
+     * @return the menus
+     */
+    public List<MenuModel> getMenus() {
+        return menus;
+    }
+
+    /**
+     * Sets menus.
+     *
+     * @param menus the menus
+     */
+    public void setMenus(List<MenuModel> menus) {
+        this.menus = menus;
+    }
+
+    public RoleModel getRole() {
+        return role;
+    }
+
+    public void setRole(RoleModel role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "UserModel{" +
@@ -147,6 +190,8 @@ public class UserModel {
                 ", enabled=" + enabled +
                 ", locked=" + locked +
                 ", expired=" + expired +
+                ", role=" + role +
+                ", menus=" + menus +
                 '}';
     }
 }
