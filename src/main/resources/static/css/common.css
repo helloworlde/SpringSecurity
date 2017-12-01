@@ -1,0 +1,8 @@
+.full-screen {
+    height: 100vh;
+    width: 100vw;
+}
+
+.fixed-page {
+    overflow: hidden;
+}
