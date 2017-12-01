@@ -4,7 +4,7 @@
 <aside class="left-sidebar" th:fragment="menu">
     <div class="scroll-sidebar">
         <nav class="sidebar-nav">
-            <ul id="sidebarnav">
+            <ul id="sidebarnav" th:if="${session.user} != null">
                 <li th:each="menu,menuStat : ${session.user.menus}">
                     <a class="waves-effect waves-dark" href="${menu.url}" th:href="${menu.url}"
                        aria-expanded="false">
