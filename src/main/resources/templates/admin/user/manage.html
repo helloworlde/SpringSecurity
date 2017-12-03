@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout::layout">
+<body>
+<div layout:fragment="content">
+    <div>
+        <h1>User Management</h1>
+        <table class="table table-hover table-responsive">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Role</th>
+                <th scope="col">Enabled</th>
+                <th scope="col">Expired</th>
+                <th scope="col">Locked</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user:${userList}">
+                <td th:text="${user.id}">Id</td>
+                <td th:text="${user.username}">Username</td>
+                <td th:text="${user.role.description}">Role</td>
+                <td th:text="${user.enabled}">Enabled</td>
+                <td th:text="${user.expired}">Expired</td>
+                <td th:text="${user.locked}">Locked</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.hellowood.springsecurity.mapper.AdminMapper">
+
+    <resultMap id="BaseUserModelResultMap" type="cn.com.hellowood.springsecurity.model.UserModel">
+        <id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"></id>
+        <result column="username" property="username" javaType="java.lang.String" jdbcType="VARCHAR"></result>
+        <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR"></result>
+        <result column="enabled" property="enabled" javaType="java.lang.Boolean" jdbcType="BOOLEAN"></result>
+        <result column="expired" property="expired" javaType="java.lang.Boolean" jdbcType="BOOLEAN"></result>
+        <result column="locked" property="locked" javaType="java.lang.Boolean" jdbcType="BOOLEAN"></result>
+        <association property="role" javaType="cn.com.hellowood.springsecurity.model.RoleModel"
+                     column="id" select="getRoleByUserId">
+        </association>
+    </resultMap>
+
+    <resultMap id="BaseRoleResultMap" type="cn.com.hellowood.springsecurity.model.RoleModel">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="is_active" property="isActive" jdbcType="BOOLEAN"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getRoleByUserId" parameterType="java.lang.Integer"
+            resultType="cn.com.hellowood.springsecurity.model.RoleModel">
+        SELECT
+            r.id,
+            r.name,
+            r.is_active,
+            r.description,
+            r.last_update_time
+        FROM role r
+            LEFT JOIN user_role_xref urx
+                ON r.id = urx.role_id
+        WHERE user_id = #{userId, jdbcType=INTEGER}
+    </select>
+
+    <select id="getAllUsers" resultMap="BaseUserModelResultMap">
+        SELECT
+            id,
+            username,
+            password,
+            enabled,
+            expired,
+            locked
+        FROM user
+    </select>
+</mapper>

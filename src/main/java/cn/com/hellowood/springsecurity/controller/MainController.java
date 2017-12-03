@@ -59,16 +59,6 @@ public class MainController {
     }
 
     /**
-     * Admin index page.
-     *
-     * @return the page url
-     */
-    @RequestMapping("/admin/index")
-    public String adminIndex() {
-        return "/admin/index";
-    }
-
-    /**
      * Login page.
      *
      * @return the login page url
