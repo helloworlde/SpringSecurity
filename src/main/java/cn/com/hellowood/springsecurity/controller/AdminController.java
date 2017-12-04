@@ -69,10 +69,10 @@ public class AdminController {
      * @param model    the model
      * @return the string
      */
-    @GetMapping("/user/manage")
+    @GetMapping("/user/list")
     public String userManagement(HttpServletRequest request, HttpServletResponse response, Model model) {
         List<UserModel> userList = adminService.getAllUsers();
         model.addAttribute("userList", userList);
-        return "/admin/user/manage";
+        return "/admin/user/list";
     }
 }

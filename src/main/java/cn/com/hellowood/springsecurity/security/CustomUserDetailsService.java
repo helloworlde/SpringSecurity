@@ -99,7 +99,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<MenuModel> menus = menuDao.getMenuByRoleId(role.getId());
         user.setMenus(menus);
 
-        authorityList.add(new SimpleGrantedAuthority(role.getName()));
+        authorityList.add(new SimpleGrantedAuthority(role.getValue()));
         UserDetails userDetails = new User(user.getUsername(), user.getPassword(), authorityList);
 
         // Put user info to session
@@ -121,13 +121,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             logger.error("user [{}] login failed, the account not exist", username);
             throw new UsernameNotFoundException("Account not exist");
-        } else if (!user.getEnabled()) {
+        } else if (!user.isEnabled()) {
             logger.error("user [{}] login failed, the account is disabled", username);
             throw new DisabledException("Account is disabled");
-        } else if (user.getExpired()) {
+        } else if (user.isExpired()) {
             logger.error("user [{}] login failed, the account is expired", username);
             throw new AccountExpiredException("Account is expired");
-        } else if (user.getLocked()) {
+        } else if (user.isLocked()) {
             throw new LockedException("Account is locked");
         }
         return user;

@@ -5,13 +5,14 @@
     <resultMap id="BaseResultMap" type="cn.com.hellowood.springsecurity.model.RoleModel">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="is_active" property="isActive" jdbcType="BOOLEAN"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+        <result column="active" property="active" jdbcType="BOOLEAN"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, name, is_active, description, last_update_time
+        id, name, value, active, description, last_update_time
     </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -27,10 +28,19 @@
     </delete>
 
     <insert id="insert" parameterType="cn.com.hellowood.springsecurity.model.RoleModel">
-        INSERT INTO role (id, name, is_active,
-        description, last_update_time)
-        VALUES (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{isActive,jdbcType=BIT},
-        #{description,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP})
+        INSERT INTO role (
+            id,
+            name,
+            value,
+            active,
+            description,
+            last_update_time)
+        VALUES (#{id,jdbcType=INTEGER},
+                #{name,jdbcType=VARCHAR},
+                #{value,jdbcType=VARCHAR},
+                #{active,jdbcType=BIT},
+                #{description,jdbcType=VARCHAR},
+                #{lastUpdateTime,jdbcType=TIMESTAMP})
     </insert>
 
     <insert id="insertSelective" parameterType="cn.com.hellowood.springsecurity.model.RoleModel">
@@ -42,8 +52,11 @@
             <if test="name != null">
                 name,
             </if>
-            <if test="isActive != null">
-                is_active,
+            <if test="value != null">
+                value,
+            </if>
+            <if test="active != null">
+                active,
             </if>
             <if test="description != null">
                 description,
@@ -59,8 +72,11 @@
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
             </if>
-            <if test="isActive != null">
-                #{isActive,jdbcType=BIT},
+            <if test="value != null">
+                #{value,jdbcType=VARCHAR},
+            </if>
+            <if test="active != null">
+                #{active,jdbcType=BIT},
             </if>
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
@@ -77,8 +93,11 @@
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
-            <if test="isActive != null">
-                is_active = #{isActive,jdbcType=BIT},
+            <if test="value != null">
+                value = #{value,jdbcType=VARCHAR},
+            </if>
+            <if test="active != null">
+                active = #{active,jdbcType=BIT},
             </if>
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
@@ -92,10 +111,11 @@
 
     <update id="updateByPrimaryKey" parameterType="cn.com.hellowood.springsecurity.model.RoleModel">
         UPDATE role
-        SET name = #{name,jdbcType=VARCHAR},
-        is_active = #{isActive,jdbcType=BIT},
-        description = #{description,jdbcType=VARCHAR},
-        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+        SET name             = #{name,jdbcType=VARCHAR},
+            value            = #{value,jdbcType=VARCHAR},
+            active           = #{active,jdbcType=BIT},
+            description      = #{description,jdbcType=VARCHAR},
+            last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 

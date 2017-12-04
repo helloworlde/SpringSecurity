@@ -1,5 +1,7 @@
 package cn.com.hellowood.springsecurity.model;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -7,7 +9,9 @@ import java.util.List;
  *
  * @author HelloWood
  */
-public class UserModel {
+public class UserModel implements Serializable {
+
+    private static final long serialVersionUID = -2857744165762872625L;
 
     private Integer id;
 
@@ -15,162 +19,150 @@ public class UserModel {
 
     private String password;
 
-    private Boolean enabled;
+    private boolean enabled;
 
-    private Boolean locked;
+    private boolean locked;
 
-    private Boolean expired;
+    private boolean expired;
+
+    private Integer category;
+
+    private String categoryName;
+
+    private String categoryValue;
+
+    private String categoryDisplayValue;
+
+    private Date addTime;
+
+    private Date lastUpdateTime;
+
+    private String comment;
 
     private RoleModel role;
 
     private List<MenuModel> menus;
 
-    /**
-     * Instantiates a new User model.
-     */
     public UserModel() {
     }
 
-    /**
-     * Instantiates a new User model.
-     *
-     * @param id       the id
-     * @param username the username
-     * @param password the password
-     * @param enabled  the enabled
-     */
-    public UserModel(Integer id, String username, String password, Boolean enabled) {
+    public UserModel(Integer id, String username, String password, boolean enabled, boolean locked, boolean expired, Integer category, String categoryValue, String categoryDisplayValue, Date addTime, Date lastUpdateTime, String comment) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.enabled = enabled;
+        this.locked = locked;
+        this.expired = expired;
+        this.category = category;
+        this.categoryValue = categoryValue;
+        this.categoryDisplayValue = categoryDisplayValue;
+        this.addTime = addTime;
+        this.lastUpdateTime = lastUpdateTime;
+        this.comment = comment;
     }
 
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * Sets id.
-     *
-     * @param id the id
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * Gets username.
-     *
-     * @return the username
-     */
     public String getUsername() {
         return username;
     }
 
-    /**
-     * Sets username.
-     *
-     * @param username the username
-     */
     public void setUsername(String username) {
         this.username = username;
     }
 
-    /**
-     * Gets password.
-     *
-     * @return the password
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     * Sets password.
-     *
-     * @param password the password
-     */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    /**
-     * Gets enabled.
-     *
-     * @return the enabled
-     */
-    public Boolean getEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
 
-    /**
-     * Sets enabled.
-     *
-     * @param enabled the enabled
-     */
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
-    /**
-     * Gets locked.
-     *
-     * @return the locked
-     */
-    public Boolean getLocked() {
+    public boolean isLocked() {
         return locked;
     }
 
-    /**
-     * Sets locked.
-     *
-     * @param locked the locked
-     */
-    public void setLocked(Boolean locked) {
+    public void setLocked(boolean locked) {
         this.locked = locked;
     }
 
-    /**
-     * Gets expired.
-     *
-     * @return the expired
-     */
-    public Boolean getExpired() {
+    public boolean isExpired() {
         return expired;
     }
 
-    /**
-     * Sets expired.
-     *
-     * @param expired the expired
-     */
-    public void setExpired(Boolean expired) {
+    public void setExpired(boolean expired) {
         this.expired = expired;
     }
 
-
-    /**
-     * Gets menus.
-     *
-     * @return the menus
-     */
-    public List<MenuModel> getMenus() {
-        return menus;
+    public Integer getCategory() {
+        return category;
     }
 
-    /**
-     * Sets menus.
-     *
-     * @param menus the menus
-     */
-    public void setMenus(List<MenuModel> menus) {
-        this.menus = menus;
+    public void setCategory(Integer category) {
+        this.category = category;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getCategoryValue() {
+        return categoryValue;
+    }
+
+    public void setCategoryValue(String categoryValue) {
+        this.categoryValue = categoryValue;
+    }
+
+    public String getCategoryDisplayValue() {
+        return categoryDisplayValue;
+    }
+
+    public void setCategoryDisplayValue(String categoryDisplayValue) {
+        this.categoryDisplayValue = categoryDisplayValue;
+    }
+
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    public Date getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public RoleModel getRole() {
@@ -181,17 +173,11 @@ public class UserModel {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "UserModel{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", locked=" + locked +
-                ", expired=" + expired +
-                ", role=" + role +
-                ", menus=" + menus +
-                '}';
+    public List<MenuModel> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<MenuModel> menus) {
+        this.menus = menus;
     }
 }

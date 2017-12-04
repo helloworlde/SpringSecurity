@@ -7,6 +7,9 @@ import java.util.Date;
  * @author HelloWood
  */
 public class MenuModel implements Serializable {
+
+    private static final long serialVersionUID = 3902090352219967399L;
+
     private Integer id;
 
     private String value;
@@ -19,11 +22,23 @@ public class MenuModel implements Serializable {
 
     private String description;
 
-    private Boolean isActive;
+    private boolean active;
 
     private Date lastUpdateTime;
 
-    private static final long serialVersionUID = 1L;
+    public MenuModel() {
+    }
+
+    public MenuModel(Integer id, String value, String displayValue, String url, Integer category, String description, boolean active, Date lastUpdateTime) {
+        this.id = id;
+        this.value = value;
+        this.displayValue = displayValue;
+        this.url = url;
+        this.category = category;
+        this.description = description;
+        this.active = active;
+        this.lastUpdateTime = lastUpdateTime;
+    }
 
     public Integer getId() {
         return id;
@@ -73,12 +88,12 @@ public class MenuModel implements Serializable {
         this.description = description;
     }
 
-    public Boolean getIsActive() {
-        return isActive;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Date getLastUpdateTime() {
@@ -87,24 +102,5 @@ public class MenuModel implements Serializable {
 
     public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", value=").append(value);
-        sb.append(", displayValue=").append(displayValue);
-        sb.append(", url=").append(url);
-        sb.append(", category=").append(category);
-        sb.append(", description=").append(description);
-        sb.append(", isActive=").append(isActive);
-        sb.append(", lastUpdateTime=").append(lastUpdateTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
     }
 }

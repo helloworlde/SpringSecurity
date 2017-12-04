@@ -5,19 +5,18 @@ CREATE TABLE menu (
   url              VARCHAR(100) NOT NULL,
   category         INT,
   description      VARCHAR(100),
-  is_active        BOOLEAN      NOT NULL DEFAULT TRUE,
+  active           BOOLEAN      NOT NULL DEFAULT TRUE,
   last_update_time TIMESTAMP             DEFAULT current_timestamp ON UPDATE current_timestamp
 );
 
-INSERT INTO menu (value, display_value, url, description, is_active, last_update_time)
-VALUES ('/admin/dashboard', 'Admin Dashboard', '/admin/dashboard', 'Admin Dashboard', TRUE, current_timestamp);
+INSERT INTO menu (value, display_value, url, category, description, active, last_update_time)
+VALUES ('/admin/dashboard', 'Admin Dashboard', '/admin/dashboard', 10, 'Admin Dashboard', TRUE, current_timestamp);
 
-INSERT INTO menu (value, display_value, url, description, is_active, last_update_time)
-VALUES ('/admin/profile', 'Admin Profile', '/admin/profile', 'Admin Profile', TRUE, current_timestamp);
+INSERT INTO menu (value, display_value, url, category, description, active, last_update_time)
+VALUES ('/admin/user/list', 'User Management', '/admin/user/list', 10, 'Admin Manage User', TRUE, current_timestamp);
 
+INSERT INTO menu (value, display_value, url, category, description, active, last_update_time)
+VALUES ('/user/dashboard', 'User Dashboard', '/user/dashboard', 11, 'User Dashboard', TRUE, current_timestamp);
 
-INSERT INTO menu (value, display_value, url, description, is_active, last_update_time)
-VALUES ('/user/dashboard', 'User Dashboard', '/user/dashboard', 'User Dashboard', TRUE, current_timestamp);
-
-INSERT INTO menu (value, display_value, url, description, is_active, last_update_time)
-VALUES ('/user/profile', 'User Profile', '/user/profile', 'User Profile', TRUE, current_timestamp);
+INSERT INTO menu (value, display_value, url, category, description, active, last_update_time)
+VALUES ('/user/profile', 'User Profile', '/user/profile', 11, 'User Profile', TRUE, current_timestamp);

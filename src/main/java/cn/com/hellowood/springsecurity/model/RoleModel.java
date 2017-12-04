@@ -7,17 +7,32 @@ import java.util.Date;
  * @author HelloWood
  */
 public class RoleModel implements Serializable {
+
+    private static final long serialVersionUID = -6849858006084750094L;
+
     private Integer id;
 
     private String name;
 
-    private Boolean isActive;
+    private boolean active;
+
+    private String value;
 
     private String description;
 
     private Date lastUpdateTime;
 
-    private static final long serialVersionUID = 1L;
+    public RoleModel() {
+    }
+
+    public RoleModel(Integer id, String name, boolean active, String value, String description, Date lastUpdateTime) {
+        this.id = id;
+        this.name = name;
+        this.active = active;
+        this.value = value;
+        this.description = description;
+        this.lastUpdateTime = lastUpdateTime;
+    }
 
     public Integer getId() {
         return id;
@@ -35,12 +50,12 @@ public class RoleModel implements Serializable {
         this.name = name;
     }
 
-    public Boolean getIsActive() {
-        return isActive;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getDescription() {
@@ -59,19 +74,12 @@ public class RoleModel implements Serializable {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", isActive=").append(isActive);
-        sb.append(", description=").append(description);
-        sb.append(", lastUpdateTime=").append(lastUpdateTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+    public String getValue() {
+        return value;
     }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
 }

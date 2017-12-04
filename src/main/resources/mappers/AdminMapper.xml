@@ -17,7 +17,7 @@
     <resultMap id="BaseRoleResultMap" type="cn.com.hellowood.springsecurity.model.RoleModel">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="is_active" property="isActive" jdbcType="BOOLEAN"/>
+        <result column="active" property="active" jdbcType="BOOLEAN"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -27,7 +27,7 @@
         SELECT
             r.id,
             r.name,
-            r.is_active,
+            r.active,
             r.description,
             r.last_update_time
         FROM role r
