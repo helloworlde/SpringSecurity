@@ -9,24 +9,27 @@
     <link rel="stylesheet" href="/webjars/bootstrap/4.0.0-beta.2/css/bootstrap.css"
           th:href="@{/webjars/bootstrap/4.0.0-beta.2/css/bootstrap.css}"/>
 </head>
-<body>
-<div class="container">
-    <form action="#" class="form-signin">
-        <h2 class="form-signin-heading">Hello Spring Security</h2>
-        <h5 class="form-signin-heading content-adjust">Anyone can access this page</h5>
-        <div th:if="${session.user} != null">
-            <h5 class="form-signin-heading content-adjust">Your username is <span th:text="${session.user.username}"></span></h5>
-            <a href="/user/index" th:href="@{/user/index}" class="btn btn-success btn-block">To Security page</a>
-        </div>
-        <div th:if="${session.user} == null">
-            <a href="/index" th:href="@{/login}" class="btn btn-primary btn-block">To Login page</a>
-        </div>
-    </form>
-    <div th:fragment="logout" class="logout" th:if="${session.user} != null">
-        <form action="#" th:action="@{/logout}" method="post" class="form-signin">
-            <button class="btn btn-warning btn-block" type="submit">Log out</button>
-        </form>
-    </div>
+<body class="fixed-page">
+<div class="jumbotron full-screen">
+    <h1 class="display-3">Hello, Spring Security!</h1>
+    <p class="lead">
+        This is a simple Spring Security application based on Spring Boot sample.
+    </p>
+    <p class="lead">
+        It is a basic demo for Spring Security by using Database to authentication, used Thymeleaf as template language.
+    </p>
+    <p class="lead">
+        For more detail to learn, added MyBatis to load role and permission, also finished basic user manage
+    </p>
+    <hr class="my-4"/>
+    <p>You can direct to login page for more detail.</p>
+    <p>
+        Default administrator account is <code>admin</code> and password is <code>admin</code>,
+        general user account is <code>user</code> and <code>password</code>
+    </p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="./login.html" role="button">Learn more</a>
+    </p>
 </div>
 </body>
 </html>
