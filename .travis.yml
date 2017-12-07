@@ -5,11 +5,11 @@ env:
   global:
   - TERM=dumb
   - GRADLE_OPTS="-Xmx1024m -Xms256m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled
-  - CC_TEST_REPORTER_ID=4cb43e8ecacdde547c8563948f4a5d8a597348a58d4639045a9434eae0dcb86b
 branches:
   only:
   - master
   - dev
+  - thymeleaf
 install:
 - true
 notifications:
@@ -20,15 +20,6 @@ notifications:
 before_install:
 - chmod +x gradlew
 - pip install --user codecov
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-script:
-  - bundle exec rspec
-after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 after_success:
   - codecov
-  - ./gradlew jacocoTestReport coveralls
   - bash <(curl -s https://codecov.io/bash)
