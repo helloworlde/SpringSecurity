@@ -49,7 +49,7 @@ jobs:
       - store_artifacts:
           path: build/reports
       - store_artifacts:
-          path: build/libs/*.war
+          path: build/libs/Security.war
 
 dependencies:
   override:
