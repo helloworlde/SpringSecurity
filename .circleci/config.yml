@@ -40,6 +40,14 @@ jobs:
 
       # run tests!
       - run: gradle test
+
+      - store_test_results:
+          path: /build/reports/tests/test
+  test:
+    post:
+      - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+      - find . -type f -regex ".*/build/reports/*/*.html" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+
 dependencies:
   override:
      - chmod +x gradlew
