@@ -9,7 +9,7 @@
 [![Build Status](https://travis-ci.org/helloworlde/SpringSecurity.svg?branch=dev)](https://travis-ci.org/helloworlde/SpringSecurity)
 [![CircleCI](https://circleci.com/gh/helloworlde/SpringSecurity/tree/dev.svg?style=svg)](https://circleci.com/gh/helloworlde/SpringSecurity/tree/dev)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a88bd270d44e46aabd9696d056d4de50)](https://www.codacy.com/app/helloworlde/SpringSecurity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=helloworlde/SpringSecurity&amp;utm_campaign=Badge_Grade)
-
+[![codecov](https://codecov.io/gh/helloworlde/SpringSecurity/branch/master/graph/badge.svg)](https://codecov.io/gh/helloworlde/SpringSecurity)
 ## Create Spring Boot Application
 
 ## Add Spring Security Dependence

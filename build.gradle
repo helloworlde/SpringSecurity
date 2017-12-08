@@ -49,11 +49,35 @@ dependencies {
     testCompile('org.springframework.security:spring-security-test')
 }
 
+
 jacocoTestReport {
     reports {
-        xml.enabled false
+        xml.enabled true
         html.enabled true
     }
 }
 
+task codeCoverageReport(type: JacocoReport) {
+    classDirectories = files('build/classes')
+    sourceDirectories = files('src/main/java')
+
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        html.enabled true
+        csv.enabled true
+    }
+}
+
+codeCoverageReport.dependsOn {
+    subprojects*.test
+}
+check.dependsOn codeCoverageReport
 check.dependsOn jacocoTestReport
+

@@ -22,6 +22,7 @@ before_install:
 - pip install --user codecov
 script:
   - ./gradlew check
+  - ./gradlew codeCoverageReport
 after_success:
   - codecov
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -t 92b3ad6b-92f7-49bb-94e7-ea233b860e47

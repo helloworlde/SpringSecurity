@@ -44,13 +44,17 @@ jobs:
 
       - run: gradle test
 
+      - run: gradle check
+
+      - run: gradle codeCoverageReport
+
       - store_test_results:
           path: build/reports
       - store_artifacts:
           path: build/reports
       - store_artifacts:
           path: build/libs/Security.war
-
+      - run: - bash <(curl -s https://codecov.io/bash) -t 92b3ad6b-92f7-49bb-94e7-ea233b860e47
 dependencies:
   override:
      - chmod +x gradlew
