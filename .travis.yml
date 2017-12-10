@@ -5,7 +5,7 @@ env:
   global:
   - TERM=dumb
   - GRADLE_OPTS="-Xmx1024m -Xms256m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled
-  - CC_TEST_REPORTER_ID=787a2f89b15c637323c7340d65ec17e898ac44480706b4b4122ea040c2a88f1d
+  - CC_TEST_REPORTER_ID=4cb43e8ecacdde547c8563948f4a5d8a597348a58d4639045a9434eae0dcb86b
 branches:
   only:
   - master
