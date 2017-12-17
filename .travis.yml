@@ -22,14 +22,14 @@ before_install:
 - chmod +x gradlew
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+#  - chmod +x ./cc-test-reporter
+#  - ./cc-test-reporter before-build
 script:
   - ./gradlew check
   - ./gradlew codeCoverageReport
-  - bundle exec rspec
-after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+#  - bundle exec rspec
+#after_script:
+#  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 after_success:
   - codecov
   - bash <(curl -s https://codecov.io/bash) -t 92b3ad6b-92f7-49bb-94e7-ea233b860e47
