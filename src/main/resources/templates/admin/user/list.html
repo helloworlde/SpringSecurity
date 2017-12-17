@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1777/xhtml"
+      xmlns:layout="http://www.w3.org/1777/xhtml" xmlns:th="http://www.w3.org/1777/xhtml"
       layout:decorator="layout::layout">
 <body>
 <div layout:fragment="content">
     <div>
         <h1>User Management</h1>
+        <button class="btn btn-success" data-toggle="modal" data-target="#addUserModal">Add</button>
         <table class="table table-hover table-responsive">
             <thead>
             <tr>
@@ -15,20 +16,204 @@
                 <th scope="col">Enabled</th>
                 <th scope="col">Expired</th>
                 <th scope="col">Locked</th>
+                <th scope="col">Category</th>
+                <th scope="col">Comment</th>
+                <th scope="col">Add Time</th>
+                <th scope="col">Last Update Time</th>
+                <th scope="col">Operation</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="user:${userList}">
-                <td th:text="${user.id}">Id</td>
-                <td th:text="${user.username}">Username</td>
-                <td th:text="${user.role.description}">Role</td>
-                <td th:text="${user.enabled}">Enabled</td>
-                <td th:text="${user.expired}">Expired</td>
-                <td th:text="${user.locked}">Locked</td>
+                <td th:text="${user.id}" class="table-content-middle">Id</td>
+                <td th:text="${user.username}" class="table-content-middle">Username</td>
+                <td th:text="${user.role.name}" class="table-content-middle">Role</td>
+                <td th:text="${user.enabled}" class="table-content-middle">Enabled</td>
+                <td th:text="${user.expired}" class="table-content-middle">Expired</td>
+                <td th:text="${user.locked}" class="table-content-middle">Locked</td>
+                <td th:text="${user.categoryDisplayValue}" class="table-content-middle">Category</td>
+                <td th:text="${user.comment}" class="table-content-middle">Comment</td>
+                <td th:text="${#dates.format(user.addTime, 'yyyy-MM-dd HH:mm:ss')}" class="table-content-middle">
+                    Add Time
+                </td>
+                <td th:text="${#dates.format(user.lastUpdateTime, 'yyyy-MM-dd HH:mm:ss')}" class="table-content-middle">
+                    Last Update Time
+                </td>
+                <td>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#updateUserModal">Update</button>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
+
+    <!-- Update User Modal -->
+    <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input type="hidden" id="updateUserId" name="id"/>
+                        <div class="form-group row">
+                            <label for="updateUsername" class="col-sm-3 col-form-label">Username:</label>
+                            <div class="col-sm-7">
+                                <input type="text" readonly="readonly" class="form-control-plaintext"
+                                       id="updateUsername"
+                                       name="username" value="Admin"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="updateRole" class="col-sm-3 col-form-label">Role:</label>
+                            <div class="col-sm-7">
+                                <input type="text" readonly="readonly" class="form-control-plaintext" id="updateRole"
+                                       name="username" value="Admin"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-3">Enabled:</div>
+                            <div class="col-sm-7">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="updateEnabled"
+                                               name="enabled"/> Enabled
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-3">Locked:</div>
+                            <div class="col-sm-7">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="updateLocked"
+                                               name="locked"/> Locked
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-3">Expired:</div>
+                            <div class="col-sm-7">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="updateExpired"
+                                               name="expired"/> Expired
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="updateComment" class="col-sm-3 col-form-label">Comment:</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="updateComment"
+                                       name="comment" value="Administrator"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Update User Modal -->
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/user" method="POST">
+                        <div class="form-group row">
+                            <label for="addUsername" class="col-sm-3 col-form-label">Username:</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="addUsername"
+                                       name="username" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="addRole" class="col-sm-3 col-form-label">Role:</label>
+                            <div class="col-sm-7">
+                                <select class="custom-select fit-div" id="addRole" name="role">
+                                    <option value="1">Admin</option>
+                                    <option value="2">User</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-3">Enabled:</div>
+                            <div class="col-sm-7">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="addEnabled" name="enabled"/>
+                                        Enabled
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-3">Locked:</div>
+                            <div class="col-sm-7">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="addLocked" name="locked"/>
+                                        Locked
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-3">Expired:</div>
+                            <div class="col-sm-7">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" id="addExpired" name="expired"/>
+                                        Expired
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="addCategory" class="col-sm-3 col-form-label">Category:</label>
+                            <div class="col-sm-7">
+                                <select class="custom-select fit-div" name="category" id="addCategory">
+                                    <option value="1">Admin</option>
+                                    <option value="2">User</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="addComment" class="col-sm-3 col-form-label">Comment:</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="addComment"
+                                       name="comment" value=""/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add User Modal -->
+    <script src="/js/user/list.js"></script>
 </div>
 </body>
 </html>

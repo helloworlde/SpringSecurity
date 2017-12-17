@@ -9,6 +9,17 @@
         <result column="enabled" property="enabled" javaType="java.lang.Boolean" jdbcType="BOOLEAN"></result>
         <result column="expired" property="expired" javaType="java.lang.Boolean" jdbcType="BOOLEAN"></result>
         <result column="locked" property="locked" javaType="java.lang.Boolean" jdbcType="BOOLEAN"></result>
+        <result column="category" property="category" javaType="java.lang.Integer" jdbcType="INTEGER"></result>
+        <result column="add_time" property="addTime" javaType="java.util.Date" jdbcType="TIMESTAMP"></result>
+        <result column="comment" property="comment" javaType="java.lang.String" jdbcType="VARCHAR"></result>
+        <result column="last_update_time" property="lastUpdateTime" javaType="java.util.Date"
+                jdbcType="TIMESTAMP"></result>
+        <result column="category" property="category" javaType="java.lang.Integer" jdbcType="INTEGER"></result>
+        <result column="category_name" property="categoryName" javaType="java.lang.String" jdbcType="VARCHAR"></result>
+        <result column="category_value" property="categoryValue" javaType="java.lang.String"
+                jdbcType="VARCHAR"></result>
+        <result column="category_display_value" property="categoryDisplayValue" javaType="java.lang.String"
+                jdbcType="VARCHAR"></result>
         <association property="role" javaType="cn.com.hellowood.springsecurity.model.RoleModel"
                      column="id" select="getRoleByUserId">
         </association>
@@ -17,6 +28,7 @@
     <resultMap id="BaseRoleResultMap" type="cn.com.hellowood.springsecurity.model.RoleModel">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
         <result column="active" property="active" jdbcType="BOOLEAN"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
@@ -38,12 +50,22 @@
 
     <select id="getAllUsers" resultMap="BaseUserModelResultMap">
         SELECT
-            id,
-            username,
-            password,
-            enabled,
-            expired,
-            locked
-        FROM user
+            u.id,
+            u.username,
+            u.password,
+            u.enabled,
+            u.expired,
+            u.locked,
+            u.category,
+            u.add_time,
+            u.last_update_time,
+            u.comment,
+            c.id            AS category,
+            c.name          AS category_name,
+            c.value         AS category_value,
+            c.display_value AS category_display_value
+        FROM user u
+            LEFT JOIN codetable c
+                ON u.category = c.id
     </select>
 </mapper>

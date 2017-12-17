@@ -6,3 +6,18 @@
 .fixed-page {
     overflow: hidden;
 }
+
+.content-center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table-content-middle {
+    text-align: left;
+    vertical-align: middle !important;
+}
+
+.fit-div {
+    width: 100%;
+}
