@@ -6,3 +6,10 @@ CREATE TABLE user (
 );
 
 INSERT INTO user (username, password, enabled) VALUES ('username', 'password', TRUE);
+
+
+# Add test line for coverage test
+
+
+# This is  useless line 
+ 
