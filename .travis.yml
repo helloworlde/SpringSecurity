@@ -1,26 +1,19 @@
 language: java
 jdk:
-- oraclejdk8
+  - oraclejdk8
 env:
   global:
   - TERM=dumb
-  - GRADLE_OPTS="-Xmx1024m -Xms256m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled
 branches:
   only:
   - master
-  - dev
-install:
-- true
+install: mvn clean install cobertura:cobertura
 notifications:
   slack:
     on_success: change
     on_failure: change
     slack: hellowood:3qHqpWCi2LQV4MsQYPsHJBK6
 before_install:
-- chmod +x gradlew
-- pip install --user codecov
+  - pip install --user codecov
 after_success:
-  - codecov
-  - ./gradlew jacocoTestReport coveralls
   - bash <(curl -s https://codecov.io/bash)
-  - ./gradlew jacocoTestReport coveralls
