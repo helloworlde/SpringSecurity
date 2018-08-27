@@ -5,7 +5,7 @@ env:
   global:
   - TERM=dumb
 branches:
-  only:
+  only: 
   - master
 install: mvn clean install cobertura:cobertura
 notifications:
