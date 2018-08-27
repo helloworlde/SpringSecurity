@@ -19,6 +19,7 @@ public class MainController {
      */
     @RequestMapping("/")
     public String root() {
+	System.out.println("Access index page");
         return "redirect:/index";
     }
 
