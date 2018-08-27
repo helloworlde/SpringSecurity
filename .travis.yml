@@ -1,18 +1,17 @@
+sudo: required
+dist: trusty
+cache:
+  directories:
+  - "$HOME/.m2"
 language: java
 jdk:
   - oraclejdk8
-env:
-  global:
-  - TERM=dumb
 branches:
   only:
   - master
 install: mvn clean install cobertura:cobertura
-notifications:
-  slack:
-    on_success: change
-    on_failure: change
-    slack: hellowood:3qHqpWCi2LQV4MsQYPsHJBK6
+before_script:
+- echo "MAVEN_OPTS='-Xmx1024m -XX:MaxPermSize=256m'" > ~/.mavenrc
 before_install:
   - pip install --user codecov
 after_success:
